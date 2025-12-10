@@ -596,8 +596,9 @@
         }
 
         function selectOption(index) {
-            if (userAnswers[currentQuestionIndex] !== null && 
-                document.getElementById('feedback').classList.contains('correct', 'incorrect')) {
+            // Don't allow changing answer after checking
+            const feedback = document.getElementById('feedback');
+            if (!feedback.classList.contains('hidden')) {
                 return;
             }
             
