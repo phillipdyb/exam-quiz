@@ -1,0 +1,448 @@
+const allQuestions = [
+    {
+        question: "Hvilket begrep handler om å beskytte data mot uautorisert innsyn?",
+        options: ["Tilgjengelighet", "Konfidensialitet", "Integritet", "Autentisering"],
+        correct: 1
+    },
+    {
+        question: "Hvilket begrep sikrer at data ikke kan endres uoppdaget?",
+        options: ["Autorisasjon", "Integritet", "Tilgjengelighet", "Risikostyring"],
+        correct: 1
+    },
+    {
+        question: "Hvilket sikkerhetsmål er truet dersom et system er nede på grunn av DDoS-angrep?",
+        options: ["Konfidensialitet", "Integritet", "Tilgjengelighet", "Sporbarhet"],
+        correct: 2
+    },
+    {
+        question: "Hva er hovedformålet med autentisering?",
+        options: ["Å bekrefte hvem brukeren er", "Å hindre tilgang til nettverket", "Å bestemme hvilke ressurser brukeren får tilgang til", "Å loggføre brukeraktiviteter"],
+        correct: 0
+    },
+    {
+        question: "Hva er hovedformålet med autorisasjon?",
+        options: ["Å oppdage datainnbrudd", "Å bestemme tilgangsnivå til ressurser", "Å kryptere passord", "Å identifisere en bruker"],
+        correct: 1
+    },
+    {
+        question: "Hvilket prinsipp sier at en bruker kun skal ha tilgang til det som er nødvendig for jobben?",
+        options: ["Sikker presepsjon", "Totalåtkomst", "Minste privilegium", "Fullmaktskontroll"],
+        correct: 2
+    },
+    {
+        question: "Hva betyr GDPR sitt krav om formålsbegrensning?",
+        options: ["Persondata skal kun behandles til et spesifikt og legitimt formål", "Persondata skal slettes innen 30 dager", "Alle persondata må lagres på minst to lokasjoner", "Persondata skal alltid krypteres ved lagring"],
+        correct: 0
+    },
+    {
+        question: "Hvilken av disse regnes som en «personopplysning»?",
+        options: ["En anonymisert intern statistikk", "Et passord uten brukernavn", "Din IP-adresse knyttet til en bruker", "Plan for IT-innkjøp"],
+        correct: 2
+    },
+    {
+        question: "Hvilken trusseltype involverer manipulasjon av mennesker?",
+        options: ["SQL Injection", "Brute Force-angrep", "Sosial manipulering", "Sniffing"],
+        correct: 2
+    },
+    {
+        question: "Hva kalles en sårbarhet i et system som ingen leverandør har rukket å tette enda?",
+        options: ["Zero-day", "Botnet", "Trojaner", "Sandkasse"],
+        correct: 0
+    },
+    {
+        question: "Hvorfor kan svak digital sikkerhetskultur være et problem selv om ansatte får kurs?",
+        options: ["Holdninger og praksis kan fortsatt mangle, selv med kunnskap", "Kurs gir alltid for høy detaljgrad", "Kurs fører til at ansatte mister motivasjon", "Ansatte trenger ikke kunnskap, kun teknologi"],
+        correct: 0
+    },
+    {
+        question: "Hva er viktigst for god hendelseshåndtering?",
+        options: ["At kun IT-avdelingen vet om rutinene", "At man ikke rapporterer små hendelser", "At hendelser oppdages, rapporteres og håndteres raskt", "At loggføring kun skjer etter store angrep"],
+        correct: 2
+    },
+    {
+        question: "Hva bør en virksomhet gjøre først ved oppdagelse av sikkerhetsbrudd?",
+        options: ["Fjerne alle logger", "Varsle ansvarlig internt", "Skrive pressemelding", "Reinstallere alle systemer umiddelbart"],
+        correct: 1
+    },
+    {
+        question: "Hva er en risiko?",
+        options: ["En teknisk sårbarhet alene", "En potensiell hendelse med sannsynlighet og konsekvens", "En kjent løsning som reduserer trusler", "En type hackerangrep"],
+        correct: 1
+    },
+    {
+        question: "Hva er hovedhensikten med en risikovurdering?",
+        options: ["Å fjerne alle risikoer", "Å identifisere og prioritere tiltak basert på risiko", "Å skape dokumentasjon som lagres i arkiv", "Å oppfylle krav om passordbytte"],
+        correct: 1
+    },
+    {
+        question: "Hva er beste praksis for backup knyttet til løsepengevirus?",
+        options: ["Backup på samme nettverk som servere", "Offline eller utilgjengelig backup", "Kun skylagring", "Kun lokal NAS-lagring"],
+        correct: 1
+    },
+    {
+        question: "Hvilket tiltak beskytter primært konfidensialitet ved lagring og overføring av data?",
+        options: ["Logging", "Kryptering", "Redundans", "Versjonskontroll"],
+        correct: 1
+    },
+    {
+        question: "Hva betyr dataminimering i GDPR?",
+        options: ["Man skal samle inn så lite data som mulig", "Data skal slettes én gang i året", "Data skal samtidig deles mellom flere virksomheter", "Brukere kan ikke kreve innsyn"],
+        correct: 0
+    },
+    {
+        question: "Hvilket tiltak beskytter best mot passordlekkasje?",
+        options: ["Enklere passordregler", "Felles innloggingskontoer", "Multifaktorautentisering (MFA)", "Redusert passordlengde"],
+        correct: 2
+    },
+    {
+        question: "En ansatt finner skadelig kode som prøver å installere seg via e-postvedlegg. Hva bør gjøres?",
+        options: ["Ignorere hendelsen hvis antivirus stoppet det", "Varsle og rapportere som sikkerhetshendelse", "Først åpne filen for å undersøke", "Slette filen permanent og ikke si noe"],
+        correct: 1
+    },
+    {
+        question: "Hva er hovedmålet med konfidensialitet?",
+        options: ["Hindre uautorisert innsyn", "Sikre at data alltid kan leses", "Begrense datatap", "Redusere systemfeil"],
+        correct: 0
+    },
+    {
+        question: "Hva beskriver integritet best?",
+        options: ["At data ikke kan slette seg selv", "At data er korrekte og pålitelige", "At data alltid er tilgjengelig for brukere", "At data er lagret kryptert"],
+        correct: 1
+    },
+    {
+        question: "Hvilket sikkerhetsmål går tapt ved dataforfalskning?",
+        options: ["Tilgjengelighet", "Konfidensialitet", "Integritet", "Sporbarhet"],
+        correct: 2
+    },
+    {
+        question: "Hvilket sikkerhetsmål går primært tapt ved datatap etter maskinvarefeil?",
+        options: ["Tilgjengelighet", "Integritet", "Konfidensialitet", "Autorisasjon"],
+        correct: 0
+    },
+    {
+        question: "Hva er formålet med autentisering?",
+        options: ["Å bekrefte identiteten til en bruker", "Å overvåke trafikk", "Å gi tilgang til nettverket", "Å kontrollere dataintegritet"],
+        correct: 0
+    },
+    {
+        question: "Autorisasjon handler om å…",
+        options: ["verifisere brukerens identitet", "gi eller nekte tilgang til ressurser", "kryptere data", "oppdage inntrengere"],
+        correct: 1
+    },
+    {
+        question: "Hva er en typisk svakhet ved enkle passord?",
+        options: ["De kan ikke endres", "De er lette å gjette eller brute-force", "De hindrer tilgang for autoriserte brukere", "De kan ikke brukes med MFA"],
+        correct: 1
+    },
+    {
+        question: "Hvilket tiltak reduserer risiko for phishing mest?",
+        options: ["Antivirus", "Opplæring og bevisstgjøring", "Skjermlåsing", "VPN"],
+        correct: 1
+    },
+    {
+        question: "Et angrep hvor brukere lures til å avsløre informasjon kalles…",
+        options: ["SQL injection", "Social engineering", "Man-in-the-middle", "Botnet-angrep"],
+        correct: 1
+    },
+    {
+        question: "Hva er et «botnet»?",
+        options: ["Samling av datamaskiner kontrollert av en angriper", "Program som beskytter mot virus", "Passordgenerator", "Sikkerhetskopi av serverdata"],
+        correct: 0
+    },
+    {
+        question: "Hva skiller et målrettet spear phishing-angrep fra vanlig phishing?",
+        options: ["Det sendes kun til ledelsen", "Det bruker personlig tilpasset informasjon", "Det bruker kun SMS", "Det er alltid telefonbasert"],
+        correct: 1
+    },
+    {
+        question: "GDPR gjelder for…",
+        options: ["Kun offentlige virksomheter", "Kun europeiske myndigheter", "Alle virksomheter som behandler personopplysninger om EU-borgere", "Kun virksomheter som bruker nettbaserte løsninger"],
+        correct: 2
+    },
+    {
+        question: "Hvilken av følgende anses som en spesiell kategori personopplysninger?",
+        options: ["Telefonnummer", "Høyde og vekt", "Politisk oppfatning", "Adresse"],
+        correct: 2
+    },
+    {
+        question: "Hva innebærer dataminimering?",
+        options: ["Samle inn minst mulig data for et spesifikt formål", "Komprimere data ved lagring", "Kryptere data ved overføring", "Kopiere data til skyen"],
+        correct: 0
+    },
+    {
+        question: "Når er en hendelse et personvernbrudd?",
+        options: ["Når en server er nede", "Når personopplysninger er kompromittert", "Når passordpolicy oppdateres", "Når ansatte slutter"],
+        correct: 1
+    },
+    {
+        question: "Hva er formålet med risikovurdering?",
+        options: ["Å fjerne alle trusler", "Å vurdere og prioritere sikkerhetstiltak", "Å lage sikkerhetskopier", "Å teste nettverkshastighet"],
+        correct: 1
+    },
+    {
+        question: "Risiko = ?",
+        options: ["Trussel + kostnad", "Trussel + passordstyrke", "Sannsynlighet × konsekvens", "Tid × sårbarhet"],
+        correct: 2
+    },
+    {
+        question: "Hva er en «sårbarhet»?",
+        options: ["En svakhet som kan utnyttes", "En angriper", "Et tiltak som fungerer dårlig", "En programvareoppdatering"],
+        correct: 0
+    },
+    {
+        question: "Hva menes med «least privilege»?",
+        options: ["Alle får lese-tilgang", "Brukere får kun tilgang til det de trenger", "Administratorer har ubegrensede rettigheter", "Ingen får tilgang til sensitive systemer"],
+        correct: 1
+    },
+    {
+        question: "Hva er multifaktorautentisering?",
+        options: ["To eller flere former for verifikasjon", "Ett sterkt passord", "Flere brukernavn per bruker", "Passord som ikke kan endres"],
+        correct: 0
+    },
+    {
+        question: "Hva er sikkerhetsfordelen med kryptering?",
+        options: ["Beskytter konfidensialitet", "Øker datamengden", "Forbedrer nettverkshastighet", "Forhindrer datatap"],
+        correct: 0
+    },
+    {
+        question: "Hva beskriver sporbarhet/ikke-benekting?",
+        options: ["Brukere kan ikke skjule hvem som gjorde hva", "Data kan ikke slettes", "Systemer er alltid tilgjengelige", "Brukere kan alltid nekte lovbrudd"],
+        correct: 0
+    },
+    {
+        question: "Hva bør være første tiltak ved mistanke om malware?",
+        options: ["Skru av internett/isolere enheten", "Installere nytt tastatur", "Rapportere etter 24 timer", "Ignorere hvis det ikke påvirker nettverket"],
+        correct: 0
+    },
+    {
+        question: "Hva er hendelseshåndtering?",
+        options: ["Rapportering, analyse og respons på sikkerhetshendelser", "Testing av nettverkshastighet", "Å lage e-postrutiner", "Å slette logger etter bruk"],
+        correct: 0
+    },
+    {
+        question: "Hvilket tiltak beskytter best mot tap av tilgjengelighet?",
+        options: ["Redundant system/backup", "VPN-bruk", "Passordbytte", "Antivirus"],
+        correct: 0
+    },
+    {
+        question: "Hvilket begrep beskriver at man må kunne gjenopprette systemer etter hendelser?",
+        options: ["Risikominimering", "Resiliens", "Aggregering", "GDPR"],
+        correct: 1
+    },
+    {
+        question: "Hvorfor må backup testes?",
+        options: ["For å sjekke at data kan gjenopprettes ved behov", "For å frigjøre lagringsplass", "For å unngå krypteringskrav", "For å redusere nettverkstrafikk"],
+        correct: 0
+    },
+    {
+        question: "Hvorfor er menneskelige feil en stor risiko?",
+        options: ["De kan forhindres helt", "Teknologi kan ikke beskytte mot alle typer feil", "De er mindre alvorlige enn tekniske feil", "De skjer bare i nye virksomheter"],
+        correct: 1
+    },
+    {
+        question: "Hva er en typisk konsekvens av DDoS-angrep?",
+        options: ["Tap av konfidensialitet", "Redusert tilgjengelighet", "Økt integritet", "Passordlekkasje"],
+        correct: 1
+    },
+    {
+        question: "Hva bør en ansatt gjøre ved mistanke om databrudd?",
+        options: ["Rapportere gjennom virksomhetens etablerte rutiner", "Aldri si ifra før bekreftelse", "Slette alt lokalt innhold", "Varsle kun kollegaer privat"],
+        correct: 0
+    }
+];
+
+let currentQuestions = [];
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let answeredQuestions = []; // Track which questions have been checked
+let score = 0;
+
+function startQuiz(mode) {
+    if (mode === 'all') {
+        currentQuestions = [...allQuestions];
+    } else if (mode === 'random20') {
+        currentQuestions = getRandomQuestions(20);
+    } else if (mode === 'random10') {
+        currentQuestions = getRandomQuestions(10);
+    }
+
+    userAnswers = new Array(currentQuestions.length).fill(null);
+    answeredQuestions = new Array(currentQuestions.length).fill(false);
+    currentQuestionIndex = 0;
+    score = 0;
+
+    document.getElementById('startScreen').classList.add('hidden');
+    document.getElementById('quizScreen').classList.remove('hidden');
+    
+    showQuestion();
+}
+
+function getRandomQuestions(count) {
+    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+}
+
+function showQuestion() {
+    const question = currentQuestions[currentQuestionIndex];
+    const isAnswered = answeredQuestions[currentQuestionIndex];
+    
+    document.getElementById('questionNumber').textContent = 
+        `Spørsmål ${currentQuestionIndex + 1} av ${currentQuestions.length}`;
+    document.getElementById('questionText').textContent = question.question;
+    
+    const optionsContainer = document.getElementById('optionsContainer');
+    optionsContainer.innerHTML = '';
+    
+    question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        
+        if (userAnswers[currentQuestionIndex] === index) {
+            optionDiv.classList.add('selected');
+        }
+        
+        // If this question has been answered, show the results and disable clicking
+        if (isAnswered) {
+            optionDiv.classList.add('disabled');
+            if (index === question.correct) {
+                optionDiv.classList.add('correct');
+            }
+            if (userAnswers[currentQuestionIndex] === index && index !== question.correct) {
+                optionDiv.classList.add('incorrect');
+            }
+        } else {
+            optionDiv.onclick = () => selectOption(index);
+        }
+        
+        optionDiv.innerHTML = `
+            <span class="option-label">${String.fromCharCode(65 + index)})</span>
+            <span>${option}</span>
+        `;
+        optionsContainer.appendChild(optionDiv);
+    });
+
+    // Show feedback if question was already answered
+    const feedback = document.getElementById('feedback');
+    if (isAnswered) {
+        const userAnswer = userAnswers[currentQuestionIndex];
+        if (userAnswer === question.correct) {
+            feedback.textContent = '✓ Riktig!';
+            feedback.className = 'feedback correct';
+        } else {
+            feedback.textContent = `✗ Feil. Riktig svar er: ${String.fromCharCode(65 + question.correct)}) ${question.options[question.correct]}`;
+            feedback.className = 'feedback incorrect';
+        }
+        feedback.classList.remove('hidden');
+    } else {
+        feedback.classList.add('hidden');
+    }
+
+    updateProgress();
+    updateButtons();
+}
+
+function selectOption(index) {
+    // Don't allow changing answer after checking
+    if (answeredQuestions[currentQuestionIndex]) {
+        return;
+    }
+    
+    userAnswers[currentQuestionIndex] = index;
+    
+    const options = document.querySelectorAll('.option');
+    options.forEach((opt, i) => {
+        opt.classList.remove('selected');
+        if (i === index) {
+            opt.classList.add('selected');
+        }
+    });
+    
+    updateButtons();
+}
+
+function checkAnswer() {
+    const question = currentQuestions[currentQuestionIndex];
+    const userAnswer = userAnswers[currentQuestionIndex];
+    
+    if (userAnswer === null) return;
+    
+    // Mark this question as answered
+    answeredQuestions[currentQuestionIndex] = true;
+    
+    const options = document.querySelectorAll('.option');
+    const feedback = document.getElementById('feedback');
+    
+    // Disable all options
+    options.forEach(opt => {
+        opt.classList.add('disabled');
+        opt.onclick = null;
+    });
+    
+    options[question.correct].classList.add('correct');
+    
+    if (userAnswer === question.correct) {
+        feedback.textContent = '✓ Riktig!';
+        feedback.className = 'feedback correct';
+        score++;
+    } else {
+        options[userAnswer].classList.add('incorrect');
+        feedback.textContent = `✗ Feil. Riktig svar er: ${String.fromCharCode(65 + question.correct)}) ${question.options[question.correct]}`;
+        feedback.className = 'feedback incorrect';
+    }
+    
+    feedback.classList.remove('hidden');
+    document.getElementById('checkBtn').disabled = true;
+    document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < currentQuestions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+    }
+}
+
+function updateButtons() {
+    const isAnswered = answeredQuestions[currentQuestionIndex];
+    
+    document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+    document.getElementById('checkBtn').disabled = userAnswers[currentQuestionIndex] === null || isAnswered;
+    document.getElementById('nextBtn').disabled = !isAnswered;
+}
+
+function updateProgress() {
+    const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = progress + '%';
+    progressBar.textContent = `${currentQuestionIndex + 1}/${currentQuestions.length}`;
+}
+
+function showResults() {
+    document.getElementById('quizScreen').classList.add('hidden');
+    document.getElementById('resultsScreen').classList.remove('hidden');
+    
+    const percentage = Math.round((score / currentQuestions.length) * 100);
+    
+    document.getElementById('finalScore').textContent = `${score}/${currentQuestions.length}`;
+    document.getElementById('scoreDetails').textContent = `${percentage}% riktig`;
+    
+    const emoji = document.getElementById('resultEmoji');
+    if (percentage >= 90) {
+        emoji.textContent = '🏆';
+    } else if (percentage >= 70) {
+        emoji.textContent = '🎉';
+    } else if (percentage >= 50) {
+        emoji.textContent = '👍';
+    } else {
+        emoji.textContent = '📚';
+    }
+}
