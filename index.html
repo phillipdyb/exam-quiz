@@ -149,6 +149,15 @@
             background: #ffebee;
         }
 
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.disabled:hover {
+            transform: none;
+        }
+
         .option-label {
             font-weight: bold;
             color: #667eea;
@@ -540,6 +549,7 @@
         let currentQuestions = [];
         let currentQuestionIndex = 0;
         let userAnswers = [];
+        let answeredQuestions = []; // Track which questions have been checked
         let score = 0;
 
         function startQuiz(mode) {
@@ -552,6 +562,7 @@
             }
 
             userAnswers = new Array(currentQuestions.length).fill(null);
+            answeredQuestions = new Array(currentQuestions.length).fill(false);
             currentQuestionIndex = 0;
             score = 0;
 
@@ -568,6 +579,7 @@
 
         function showQuestion() {
             const question = currentQuestions[currentQuestionIndex];
+            const isAnswered = answeredQuestions[currentQuestionIndex];
             
             document.getElementById('questionNumber').textContent = 
                 `Spørsmål ${currentQuestionIndex + 1} av ${currentQuestions.length}`;
@@ -579,26 +591,54 @@
             question.options.forEach((option, index) => {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'option';
+                
                 if (userAnswers[currentQuestionIndex] === index) {
                     optionDiv.classList.add('selected');
                 }
+                
+                // If this question has been answered, show the results and disable clicking
+                if (isAnswered) {
+                    optionDiv.classList.add('disabled');
+                    if (index === question.correct) {
+                        optionDiv.classList.add('correct');
+                    }
+                    if (userAnswers[currentQuestionIndex] === index && index !== question.correct) {
+                        optionDiv.classList.add('incorrect');
+                    }
+                } else {
+                    optionDiv.onclick = () => selectOption(index);
+                }
+                
                 optionDiv.innerHTML = `
                     <span class="option-label">${String.fromCharCode(65 + index)})</span>
                     <span>${option}</span>
                 `;
-                optionDiv.onclick = () => selectOption(index);
                 optionsContainer.appendChild(optionDiv);
             });
 
+            // Show feedback if question was already answered
+            const feedback = document.getElementById('feedback');
+            if (isAnswered) {
+                const userAnswer = userAnswers[currentQuestionIndex];
+                if (userAnswer === question.correct) {
+                    feedback.textContent = '✓ Riktig!';
+                    feedback.className = 'feedback correct';
+                } else {
+                    feedback.textContent = `✗ Feil. Riktig svar er: ${String.fromCharCode(65 + question.correct)}) ${question.options[question.correct]}`;
+                    feedback.className = 'feedback incorrect';
+                }
+                feedback.classList.remove('hidden');
+            } else {
+                feedback.classList.add('hidden');
+            }
+
             updateProgress();
             updateButtons();
-            document.getElementById('feedback').classList.add('hidden');
         }
 
         function selectOption(index) {
             // Don't allow changing answer after checking
-            const feedback = document.getElementById('feedback');
-            if (!feedback.classList.contains('hidden')) {
+            if (answeredQuestions[currentQuestionIndex]) {
                 return;
             }
             
@@ -621,8 +661,17 @@
             
             if (userAnswer === null) return;
             
+            // Mark this question as answered
+            answeredQuestions[currentQuestionIndex] = true;
+            
             const options = document.querySelectorAll('.option');
             const feedback = document.getElementById('feedback');
+            
+            // Disable all options
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null;
+            });
             
             options[question.correct].classList.add('correct');
             
@@ -658,9 +707,11 @@
         }
 
         function updateButtons() {
+            const isAnswered = answeredQuestions[currentQuestionIndex];
+            
             document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
-            document.getElementById('checkBtn').disabled = userAnswers[currentQuestionIndex] === null;
-            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('checkBtn').disabled = userAnswers[currentQuestionIndex] === null || isAnswered;
+            document.getElementById('nextBtn').disabled = !isAnswered;
         }
 
         function updateProgress() {
